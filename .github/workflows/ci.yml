@@ -1,0 +1,46 @@
+name: FinFlow CI
+
+# When this workflow runs
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build, Test & Package
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the repository code onto the runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Java 17 (matches your pom.xml <java.version>17</java.version>)
+      #    and cache the local Maven repo (~/.m2) so builds are faster next time
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # 3. Compile the code
+      - name: Compile
+        run: mvn -B compile --file pom.xml
+
+      # 4. Run the test suite (TransactionServiceTest, AuthControllerTest, etc.)
+      - name: Run tests
+        run: mvn -B test --file pom.xml
+
+      # 5. Package into a JAR (skip re-running tests, already done above)
+      - name: Package JAR
+        run: mvn -B package -DskipTests --file pom.xml
+
+      # 6. Upload the built JAR as a downloadable artifact on the Actions run page
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: finflow-jar
+          path: target/*.jar
