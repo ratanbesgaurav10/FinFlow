@@ -23,7 +23,6 @@
 
     <!-- AUTHENTICATION CONTAINER -->
     <div id="auth-container" class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-        <!-- Background Glow Effects -->
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-600/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="sm:mx-auto sm:w-full sm:max-w-md text-center relative z-10">
@@ -36,36 +35,24 @@
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0">
             <div class="bg-slate-900/80 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-3xl border border-slate-800/80 sm:px-10">
-                
-                <!-- Tabs -->
                 <div class="flex rounded-xl bg-slate-950/60 p-1 mb-6 border border-slate-800">
                     <button onclick="switchTab('login')" id="tab-login" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-white bg-brand-600 shadow-lg shadow-brand-600/30">Sign In</button>
                     <button onclick="switchTab('register')" id="tab-register" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-slate-400 hover:text-white">Register</button>
                 </div>
 
-                <!-- Alert Box -->
                 <div id="alert-box" class="hidden mb-4 p-4 rounded-xl text-sm font-medium border"></div>
 
                 <!-- LOGIN FORM -->
                 <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email Address</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-regular fa-envelope"></i></span>
-                            <input type="email" id="login-email" required class="w-full pl-10 pr-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all" placeholder="admin@finflow.com">
-                        </div>
+                        <input type="email" id="login-email" required class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500" placeholder="admin@finflow.com">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Password</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" id="login-password" required class="w-full pl-10 pr-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all" placeholder="••••••••">
-                        </div>
+                        <input type="password" id="login-password" required class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500" placeholder="••••••••">
                     </div>
-                    <button type="submit" id="login-btn" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all flex items-center justify-center space-x-2">
-                        <span>Sign In</span>
-                        <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
-                    </button>
+                    <button type="submit" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all">Sign In</button>
                 </form>
 
                 <!-- REGISTER FORM -->
@@ -82,24 +69,20 @@
                         <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Password (Min 8 chars)</label>
                         <input type="password" id="reg-password" required minlength="8" class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500">
                     </div>
-                    <button type="submit" id="reg-btn" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all">
-                        Create Account
-                    </button>
+                    <button type="submit" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all">Create Account</button>
                 </form>
 
-                <!-- Demo Credentials Helper -->
                 <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1">
                     <p class="font-semibold text-slate-300">Quick Demo Credentials:</p>
                     <p>• Admin: <code class="text-brand-400">admin@finflow.com</code> / <code class="text-brand-400">Admin@1234</code></p>
-                    <p>• User 1: <code class="text-brand-400">alice@finflow.com</code> / <code class="text-brand-400">Alice@1234</code></p>
+                    <p>• Alice: <code class="text-brand-400">alice@finflow.com</code> / <code class="text-brand-400">Alice@1234</code></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DASHBOARD CONTAINER (Hidden until login) -->
+    <!-- DASHBOARD CONTAINER -->
     <div id="dashboard-container" class="hidden min-h-full flex flex-col bg-slate-950">
-        <!-- Top Navigation -->
         <header class="bg-slate-900/50 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -117,57 +100,105 @@
             </div>
         </header>
 
-        <!-- Main Dashboard Content -->
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
             <!-- Metrics Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Balance</span>
-                        <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><i class="fa-solid fa-wallet"></i></span>
-                    </div>
-                    <div class="mt-4 text-3xl font-extrabold text-white">$24,592.50</div>
-                    <div class="mt-2 text-xs text-emerald-400 flex items-center"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +12.4% this month</div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Balance</span>
+                    <div id="metric-balance" class="mt-4 text-3xl font-extrabold text-white">$0.00</div>
                 </div>
                 <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Monthly Income</span>
-                        <span class="p-2 rounded-xl bg-blue-500/10 text-blue-400"><i class="fa-solid fa-arrow-down-long"></i></span>
-                    </div>
-                    <div class="mt-4 text-3xl font-extrabold text-white">$8,450.00</div>
-                    <div class="mt-2 text-xs text-slate-400">Updated just now</div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Income</span>
+                    <div id="metric-income" class="mt-4 text-3xl font-extrabold text-emerald-400">$0.00</div>
                 </div>
                 <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Monthly Expenses</span>
-                        <span class="p-2 rounded-xl bg-rose-500/10 text-rose-400"><i class="fa-solid fa-arrow-up-long"></i></span>
-                    </div>
-                    <div class="mt-4 text-3xl font-extrabold text-white">$3,210.20</div>
-                    <div class="mt-2 text-xs text-rose-400 flex items-center"><i class="fa-solid fa-arrow-trend-down mr-1"></i> -4.1% optimized</div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Expenses</span>
+                    <div id="metric-expense" class="mt-4 text-3xl font-extrabold text-rose-400">$0.00</div>
                 </div>
             </div>
 
-            <!-- Activity Table Section -->
-            <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-xl overflow-hidden">
-                <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
-                    <h3 class="text-base font-bold text-white">Recent Transactions</h3>
-                    <span class="text-xs text-slate-400">Live Secure Feed</span>
+            <!-- Action bar & Transaction Section -->
+            <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-xl overflow-hidden p-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between pb-6 border-b border-slate-800 gap-4">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Transaction Management</h3>
+                        <p class="text-xs text-slate-400">View and record your financial activities</p>
+                    </div>
+                    <button onclick="openModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add Transaction</span>
+                    </button>
                 </div>
-                <div class="p-6 text-center text-slate-400 text-sm">
-                    <i class="fa-solid fa-circle-check text-emerald-400 text-lg mb-2 block"></i>
-                    Authentication successful. Transaction sync active via backend endpoints.
+
+                <div class="mt-6 overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                <th class="pb-3 px-4">Description</th>
+                                <th class="pb-3 px-4">Category</th>
+                                <th class="pb-3 px-4">Type</th>
+                                <th class="pb-3 px-4">Amount</th>
+                                <th class="pb-3 px-4">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body" class="divide-y divide-slate-800/60 text-sm">
+                            <tr>
+                                <td colspan="5" class="py-6 text-center text-slate-500">Loading transactions...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- ADD TRANSACTION MODAL -->
+    <div id="txn-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm px-4">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-md w-full shadow-2xl space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-white text-base">New Transaction</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="txn-form" onsubmit="handleCreateTransaction(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Description</label>
+                    <input type="text" id="txn-desc" required class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-brand-500" placeholder="e.g. Salary, Groceries">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Amount ($)</label>
+                    <input type="number" step="0.01" id="txn-amount" required class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-brand-500" placeholder="150.00">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Type</label>
+                        <select id="txn-type" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-brand-500">
+                            <option value="INCOME">Income</option>
+                            <option value="EXPENSE">Expense</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Category</label>
+                        <input type="text" id="txn-category" required class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:outline-none focus:border-brand-500" placeholder="Food, Rent">
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl text-sm shadow-lg transition-all">Save Transaction</button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        let authToken = localStorage.getItem('token');
+
+        if (authToken) {
+            showDashboard();
+        }
+
         function switchTab(tab) {
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const tabLogin = document.getElementById('tab-login');
             const tabRegister = document.getElementById('tab-register');
-            hideAlert();
+            document.getElementById('alert-box').classList.add('hidden');
 
             if (tab === 'login') {
                 loginForm.classList.remove('hidden');
@@ -182,72 +213,154 @@
             }
         }
 
-        function showAlert(message, isError = true) {
-            const box = document.getElementById('alert-box');
-            box.className = `mb-4 p-4 rounded-xl text-sm font-medium border ${isError ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}`;
-            box.innerText = message;
-            box.classList.remove('hidden');
-        }
-
-        function hideAlert() {
-            document.getElementById('alert-box').classList.add('hidden');
-        }
-
         async function handleLogin(e) {
             e.preventDefault();
-            hideAlert();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-                const data = await response.json();
-                if (response.ok && data.success) {
-                    localStorage.setItem('token', data.data.token);
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    authToken = data.data.token;
+                    localStorage.setItem('token', authToken);
                     document.getElementById('user-display-name').innerText = email;
-                    document.getElementById('auth-container').classList.add('hidden');
-                    document.getElementById('dashboard-container').classList.remove('hidden');
+                    showDashboard();
                 } else {
                     showAlert(data.message || 'Invalid credentials');
                 }
             } catch (err) {
-                showAlert('Connection error. Ensure backend is running.');
+                showAlert('Connection error with backend server.');
             }
         }
 
         async function handleRegister(e) {
             e.preventDefault();
-            hideAlert();
             const fullName = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const password = document.getElementById('reg-password').value;
 
             try {
-                const response = await fetch('/api/auth/register', {
+                const res = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ fullName, email, password })
                 });
-                const data = await response.json();
-                if (response.ok && data.success) {
+                const data = await res.json();
+                if (res.ok && data.success) {
                     showAlert('Registration successful! Please sign in.', false);
                     switchTab('login');
                 } else {
                     showAlert(data.message || 'Registration failed');
                 }
             } catch (err) {
-                showAlert('Connection error. Ensure backend is running.');
+                showAlert('Connection error with backend server.');
             }
         }
 
         function handleLogout() {
             localStorage.removeItem('token');
+            authToken = null;
             document.getElementById('dashboard-container').classList.add('hidden');
             document.getElementById('auth-container').classList.remove('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('dashboard-container').classList.remove('hidden');
+            fetchTransactions();
+        }
+
+        async function fetchTransactions() {
+            try {
+                const res = await fetch('/api/transactions', {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (res.status === 403 || res.status === 401) {
+                    handleLogout();
+                    return;
+                }
+                const data = await res.json();
+                const txns = data.data || [];
+                renderTransactions(txns);
+            } catch (err) {
+                console.error('Failed to load transactions');
+            }
+        }
+
+        function renderTransactions(txns) {
+            const tbody = document.getElementById('transactions-table-body');
+            tbody.innerHTML = '';
+
+            if (txns.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500">No transactions recorded yet. Click "Add Transaction" to begin.</td></tr>`;
+                return;
+            }
+
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            txns.forEach(t => {
+                if (t.type === 'INCOME') totalIncome += t.amount;
+                else totalExpense += t.amount;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/40 transition-all";
+                tr.innerHTML = `
+                    <td class="py-4 px-4 font-medium text-white">${t.description}</td>
+                    <td class="py-4 px-4 text-slate-400">${t.category}</td>
+                    <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold ${t.type === 'INCOME' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'}">${t.type}</span></td>
+                    <td class="py-4 px-4 font-bold ${t.type === 'INCOME' ? 'text-emerald-400' : 'text-slate-200'}">${t.type === 'INCOME' ? '+' : '-'}$${t.amount.toFixed(2)}</td>
+                    <td class="py-4 px-4 text-slate-400 text-xs">${new Date(t.date).toLocaleDateString()}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('metric-income').innerText = `$${totalIncome.toFixed(2)}`;
+            document.getElementById('metric-expense').innerText = `$${totalExpense.toFixed(2)}`;
+            document.getElementById('metric-balance').innerText = `$${(totalIncome - totalExpense).toFixed(2)}`;
+        }
+
+        async function handleCreateTransaction(e) {
+            e.preventDefault();
+            const description = document.getElementById('txn-desc').value;
+            const amount = parseFloat(document.getElementById('txn-amount').value);
+            const type = document.getElementById('txn-type').value;
+            const category = document.getElementById('txn-category').value;
+
+            try {
+                const res = await fetch('/api/transactions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ description, amount, type, category, date: new Date().toISOString() })
+                });
+                if (res.ok) {
+                    closeModal();
+                    document.getElementById('txn-form').reset();
+                    fetchTransactions();
+                } else {
+                    alert('Failed to save transaction');
+                }
+            } catch (err) {
+                alert('Server error while saving transaction');
+            }
+        }
+
+        function openModal() { document.getElementById('txn-modal').classList.remove('hidden'); }
+        function closeModal() { document.getElementById('txn-modal').classList.add('hidden'); }
+
+        function showAlert(msg, isError = true) {
+            const box = document.getElementById('alert-box');
+            box.className = `mb-4 p-4 rounded-xl text-sm font-medium border ${isError ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}`;
+            box.innerText = msg;
+            box.classList.remove('hidden');
         }
     </script>
 </body>
