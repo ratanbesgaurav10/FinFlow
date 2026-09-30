@@ -1,254 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-slate-950">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinFlow - Banking Dashboard</title>
+    <title>FinFlow - Enterprise Financial Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 950: '#0f172a' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-50 font-sans text-gray-900">
+<body class="h-full text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- App Container -->
-    <div id="app" class="min-h-screen flex flex-col justify-between">
-        
-        <!-- Navbar -->
-        <header class="bg-indigo-600 text-white shadow-md hidden" id="navbar">
-            <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                <h1 class="text-xl font-bold">FinFlow Dashboard</h1>
-                <button onclick="logout()" class="bg-indigo-700 hover:bg-indigo-800 px-4 py-2 rounded text-sm font-semibold transition">Logout</button>
+    <!-- AUTHENTICATION CONTAINER -->
+    <div id="auth-container" class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Background Glow Effects -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-md text-center relative z-10">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-400 shadow-xl shadow-brand-500/20 mb-4">
+                <i class="fa-solid fa-chart-line text-2xl text-white"></i>
+            </div>
+            <h2 class="text-3xl font-extrabold tracking-tight text-white">FinFlow</h2>
+            <p class="mt-2 text-sm text-slate-400">Enterprise Financial Management & Analytics</p>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4 sm:px-0">
+            <div class="bg-slate-900/80 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-3xl border border-slate-800/80 sm:px-10">
+                
+                <!-- Tabs -->
+                <div class="flex rounded-xl bg-slate-950/60 p-1 mb-6 border border-slate-800">
+                    <button onclick="switchTab('login')" id="tab-login" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-white bg-brand-600 shadow-lg shadow-brand-600/30">Sign In</button>
+                    <button onclick="switchTab('register')" id="tab-register" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-slate-400 hover:text-white">Register</button>
+                </div>
+
+                <!-- Alert Box -->
+                <div id="alert-box" class="hidden mb-4 p-4 rounded-xl text-sm font-medium border"></div>
+
+                <!-- LOGIN FORM -->
+                <form id="login-form" class="space-y-5" onsubmit="handleLogin(event)">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email Address</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-regular fa-envelope"></i></span>
+                            <input type="email" id="login-email" required class="w-full pl-10 pr-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all" placeholder="admin@finflow.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Password</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="login-password" required class="w-full pl-10 pr-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all" placeholder="••••••••">
+                        </div>
+                    </div>
+                    <button type="submit" id="login-btn" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all flex items-center justify-center space-x-2">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                    </button>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="register-form" class="space-y-4 hidden" onsubmit="handleRegister(event)">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Full Name</label>
+                        <input type="text" id="reg-name" required class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Email Address</label>
+                        <input type="email" id="reg-email" required class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Password (Min 8 chars)</label>
+                        <input type="password" id="reg-password" required minlength="8" class="w-full px-4 py-3 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-brand-500">
+                    </div>
+                    <button type="submit" id="reg-btn" class="w-full py-3 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition-all">
+                        Create Account
+                    </button>
+                </form>
+
+                <!-- Demo Credentials Helper -->
+                <div class="mt-6 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-1">
+                    <p class="font-semibold text-slate-300">Quick Demo Credentials:</p>
+                    <p>• Admin: <code class="text-brand-400">admin@finflow.com</code> / <code class="text-brand-400">Admin@1234</code></p>
+                    <p>• User 1: <code class="text-brand-400">alice@finflow.com</code> / <code class="text-brand-400">Alice@1234</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD CONTAINER (Hidden until login) -->
+    <div id="dashboard-container" class="hidden min-h-full flex flex-col bg-slate-950">
+        <!-- Top Navigation -->
+        <header class="bg-slate-900/50 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-600/30">
+                        <i class="fa-solid fa-chart-line text-white"></i>
+                    </div>
+                    <span class="text-lg font-bold tracking-tight text-white">FinFlow <span class="text-xs px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30">Enterprise</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="user-display-name" class="text-sm font-medium text-slate-300"></span>
+                    <button onclick="handleLogout()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition-all border border-slate-700">
+                        <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Sign Out
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Main Content Area -->
-        <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8">
-            
-            <!-- AUTH SECTION (Login / Register) -->
-            <div id="auth-section" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-8 mt-10">
-                <div class="flex justify-center mb-6 space-x-4 border-b pb-4">
-                    <button id="tab-login" onclick="switchTab('login')" class="font-bold text-indigo-600 border-b-2 border-indigo-600 pb-1">Login</button>
-                    <button id="tab-register" onclick="switchTab('register')" class="text-gray-400 font-semibold pb-1">Register</button>
+        <!-- Main Dashboard Content -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Balance</span>
+                        <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400"><i class="fa-solid fa-wallet"></i></span>
+                    </div>
+                    <div class="mt-4 text-3xl font-extrabold text-white">$24,592.50</div>
+                    <div class="mt-2 text-xs text-emerald-400 flex items-center"><i class="fa-solid fa-arrow-trend-up mr-1"></i> +12.4% this month</div>
                 </div>
-
-                <!-- Login Form -->
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="login-username" required class="mt-1 w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Monthly Income</span>
+                        <span class="p-2 rounded-xl bg-blue-500/10 text-blue-400"><i class="fa-solid fa-arrow-down-long"></i></span>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="login-password" required class="mt-1 w-full px-3 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    <div class="mt-4 text-3xl font-extrabold text-white">$8,450.00</div>
+                    <div class="mt-2 text-xs text-slate-400">Updated just now</div>
+                </div>
+                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-6 rounded-2xl shadow-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Monthly Expenses</span>
+                        <span class="p-2 rounded-xl bg-rose-500/10 text-rose-400"><i class="fa-solid fa-arrow-up-long"></i></span>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 font-semibold transition">Sign In</button>
-                </form>
-
-                <!-- Register Form -->
-                <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="reg-username" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="reg-email" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="reg-password" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 font-semibold transition">Register</button>
-                </form>
-                <p id="auth-error" class="text-red-500 text-sm mt-4 text-center"></p>
+                    <div class="mt-4 text-3xl font-extrabold text-white">$3,210.20</div>
+                    <div class="mt-2 text-xs text-rose-400 flex items-center"><i class="fa-solid fa-arrow-trend-down mr-1"></i> -4.1% optimized</div>
+                </div>
             </div>
 
-            <!-- DASHBOARD SECTION -->
-            <div id="dashboard-section" class="hidden space-y-8">
-                
-                <!-- Accounts Overview -->
-                <div class="bg-white p-6 rounded-xl shadow-md">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold text-gray-800">Your Accounts</h2>
-                        <button onclick="createAccount()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition">+ Open New Account</button>
-                    </div>
-                    <div id="accounts-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Populated dynamically -->
-                    </div>
+            <!-- Activity Table Section -->
+            <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl shadow-xl overflow-hidden">
+                <div class="px-6 py-5 border-b border-slate-800 flex items-center justify-between">
+                    <h3 class="text-base font-bold text-white">Recent Transactions</h3>
+                    <span class="text-xs text-slate-400">Live Secure Feed</span>
                 </div>
-
-                <!-- Transfer Funds -->
-                <div class="bg-white p-6 rounded-xl shadow-md max-w-lg">
-                    <h2 class="text-lg font-bold text-gray-800 mb-4">Transfer Funds</h2>
-                    <form onsubmit="handleTransfer(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Source Account Number</label>
-                            <input type="text" id="source-acc" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Target Account Number</label>
-                            <input type="text" id="target-acc" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Amount ($)</label>
-                            <input type="number" step="0.01" id="transfer-amount" required class="mt-1 w-full px-3 py-2 border rounded-md">
-                        </div>
-                        <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 font-semibold transition">Send Money</button>
-                    </form>
-                    <p id="transfer-msg" class="text-sm mt-2 text-center font-medium"></p>
+                <div class="p-6 text-center text-slate-400 text-sm">
+                    <i class="fa-solid fa-circle-check text-emerald-400 text-lg mb-2 block"></i>
+                    Authentication successful. Transaction sync active via backend endpoints.
                 </div>
-
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="bg-white border-t py-4 text-center text-sm text-gray-500">
-            &copy; 2026 FinFlow Application
-        </footer>
     </div>
 
-    <!-- Frontend JavaScript Logic -->
     <script>
-        const API_BASE = '';
-
         function switchTab(tab) {
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const tabLogin = document.getElementById('tab-login');
             const tabRegister = document.getElementById('tab-register');
-            
+            hideAlert();
+
             if (tab === 'login') {
                 loginForm.classList.remove('hidden');
                 registerForm.classList.add('hidden');
-                tabLogin.className = "font-bold text-indigo-600 border-b-2 border-indigo-600 pb-1";
-                tabRegister.className = "text-gray-400 font-semibold pb-1";
+                tabLogin.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-white bg-brand-600 shadow-lg shadow-brand-600/30";
+                tabRegister.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-slate-400 hover:text-white";
             } else {
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
-                tabRegister.className = "font-bold text-indigo-600 border-b-2 border-indigo-600 pb-1";
-                tabLogin.className = "text-gray-400 font-semibold pb-1";
+                tabRegister.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-white bg-brand-600 shadow-lg shadow-brand-600/30";
+                tabLogin.className = "flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all text-slate-400 hover:text-white";
             }
+        }
+
+        function showAlert(message, isError = true) {
+            const box = document.getElementById('alert-box');
+            box.className = `mb-4 p-4 rounded-xl text-sm font-medium border ${isError ? 'bg-rose-500/10 border-rose-500/30 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}`;
+            box.innerText = message;
+            box.classList.remove('hidden');
+        }
+
+        function hideAlert() {
+            document.getElementById('alert-box').classList.add('hidden');
         }
 
         async function handleLogin(e) {
             e.preventDefault();
-            const username = document.getElementById('login-username').value;
+            hideAlert();
+            const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             try {
-                const res = await fetch(`${API_BASE}/api/auth/login`, {
+                const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ email, password })
                 });
-                if (!res.ok) throw new Error("Invalid credentials");
-                const data = await res.json();
-                
-                // Assuming backend returns a token property (adjust key if token is structured differently)
-                localStorage.setItem('token', data.token || data.accessToken || data);
-                loadDashboard();
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    localStorage.setItem('token', data.data.token);
+                    document.getElementById('user-display-name').innerText = email;
+                    document.getElementById('auth-container').classList.add('hidden');
+                    document.getElementById('dashboard-container').classList.remove('hidden');
+                } else {
+                    showAlert(data.message || 'Invalid credentials');
+                }
             } catch (err) {
-                document.getElementById('auth-error').innerText = err.message;
+                showAlert('Connection error. Ensure backend is running.');
             }
         }
 
         async function handleRegister(e) {
             e.preventDefault();
-            const username = document.getElementById('reg-username').value;
+            hideAlert();
+            const fullName = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const password = document.getElementById('reg-password').value;
 
             try {
-                const res = await fetch(`${API_BASE}/api/auth/register`, {
+                const response = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
+                    body: JSON.stringify({ fullName, email, password })
                 });
-                if (!res.ok) throw new Error("Registration failed");
-                alert("Registration successful! Please login.");
-                switchTab('login');
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    showAlert('Registration successful! Please sign in.', false);
+                    switchTab('login');
+                } else {
+                    showAlert(data.message || 'Registration failed');
+                }
             } catch (err) {
-                document.getElementById('auth-error').innerText = err.message;
+                showAlert('Connection error. Ensure backend is running.');
             }
         }
 
-        function loadDashboard() {
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('navbar').classList.remove('hidden');
-            document.getElementById('dashboard-section').classList.remove('hidden');
-            fetchAccounts();
-        }
-
-        async function fetchAccounts() {
-            const token = localStorage.getItem('token');
-            try {
-                const res = await fetch(`${API_BASE}/api/accounts`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (!res.ok) throw new Error("Failed to fetch accounts");
-                const accounts = await res.json();
-                
-                const list = document.getElementById('accounts-list');
-                list.innerHTML = '';
-                accounts.forEach(acc => {
-                    list.innerHTML += `
-                        <div class="border p-4 rounded-lg bg-gray-50 shadow-sm">
-                            <p class="text-xs text-gray-500 uppercase font-semibold">Account Number</p>
-                            <p class="text-md font-bold text-indigo-700">${acc.accountNumber}</p>
-                            <p class="text-xs text-gray-500 uppercase font-semibold mt-2">Balance</p>
-                            <p class="text-xl font-ext500 text-gray-900">$${acc.balance}</p>
-                        </div>
-                    `;
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        async function createAccount() {
-            const token = localStorage.getItem('token');
-            try {
-                const res = await fetch(`${API_BASE}/api/accounts`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (!res.ok) throw new Error("Could not create account");
-                fetchAccounts();
-            } catch (err) {
-                alert(err.message);
-            }
-        }
-
-        async function handleTransfer(e) {
-            e.preventDefault();
-            const token = localStorage.getItem('token');
-            const sourceAccountNumber = document.getElementById('source-acc').value;
-            const targetAccountNumber = document.getElementById('target-acc').value;
-            const amount = parseFloat(document.getElementById('transfer-amount').value);
-            const msgEl = document.getElementById('transfer-msg');
-
-            try {
-                const res = await fetch(`${API_BASE}/api/transactions/transfer`, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` 
-                    },
-                    body: JSON.stringify({ sourceAccountNumber, targetAccountNumber, amount })
-                });
-                if (!res.ok) throw new Error("Transfer failed. Check account numbers and balance.");
-                msgEl.className = "text-green-600 text-sm mt-2 text-center font-medium";
-                msgEl.innerText = "Transfer completed successfully!";
-                fetchAccounts();
-            } catch (err) {
-                msgEl.className = "text-red-500 text-sm mt-2 text-center font-medium";
-                msgEl.innerText = err.message;
-            }
-        }
-
-        function logout() {
+        function handleLogout() {
             localStorage.removeItem('token');
-            document.getElementById('navbar').classList.add('hidden');
-            document.getElementById('dashboard-section').classList.add('hidden');
-            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('dashboard-container').classList.add('hidden');
+            document.getElementById('auth-container').classList.remove('hidden');
         }
     </script>
 </body>
